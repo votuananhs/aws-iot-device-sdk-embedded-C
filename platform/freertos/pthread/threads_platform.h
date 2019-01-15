@@ -22,7 +22,7 @@
 extern "C" {
 #endif
 
-#include <pthread.h>
+#include "semphr.h"
 
 /**
  * @brief Mutex Type
@@ -31,7 +31,7 @@ extern "C" {
  *
  */
 struct _IoT_Mutex_t {
-	pthread_mutex_t lock;
+	SemaphoreHandle_t lock;
 };
 
 #ifdef __cplusplus

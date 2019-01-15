@@ -13,8 +13,8 @@
  * permissions and limitations under the License.
  */
 
-#ifndef SRC_PROTOCOL_MQTT_AWS_IOT_EMBEDDED_CLIENT_WRAPPER_PLATFORM_LINUX_COMMON_TIMER_PLATFORM_H_
-#define SRC_PROTOCOL_MQTT_AWS_IOT_EMBEDDED_CLIENT_WRAPPER_PLATFORM_LINUX_COMMON_TIMER_PLATFORM_H_
+#ifndef SRC_PROTOCOL_MQTT_AWS_IOT_EMBEDDED_CLIENT_WRAPPER_PLATFORM_FREERTOS_COMMON_TIMER_PLATFORM_H_
+#define SRC_PROTOCOL_MQTT_AWS_IOT_EMBEDDED_CLIENT_WRAPPER_PLATFORM_FREERTOS_COMMON_TIMER_PLATFORM_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,15 +23,14 @@ extern "C" {
 /**
  * @file timer_platform.h
  */
-#include <sys/time.h>
-#include <sys/select.h>
+#include "FreeRTOS.h"
 #include "timer_interface.h"
 
 /**
  * definition of the Timer struct. Platform specific
  */
 struct Timer {
-	struct timeval end_time;
+	TickType_t endTick;
 };
 
 /**
@@ -45,4 +44,4 @@ void delay(unsigned milliseconds);
 }
 #endif
 
-#endif /* SRC_PROTOCOL_MQTT_AWS_IOT_EMBEDDED_CLIENT_WRAPPER_PLATFORM_LINUX_COMMON_TIMER_PLATFORM_H_ */
+#endif /* SRC_PROTOCOL_MQTT_AWS_IOT_EMBEDDED_CLIENT_WRAPPER_PLATFORM_FREERTOS_COMMON_TIMER_PLATFORM_H_ */
