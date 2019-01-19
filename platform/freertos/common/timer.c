@@ -24,25 +24,12 @@ extern "C" {
 
 #include "timer_platform.h"
 /* Get cmsis_compiler.h from this link https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/Core/Include */
-#include "cmsis_compiler.h"
-
-static TickType_t FreeRTOS_getCurrentTick(void)
-{
-	if (0 != __get_IPSR()) /* inside interrupt */
-	{
-		return xTaskGetTickCountFromISR();
-	}
-	else
-	{
-		return xTaskGetTickCount();
-	}
-}
 
 bool has_timer_expired(Timer *timer)
 {
 	uint32_t currentTick;
 
-	currentTick = FreeRTOS_getCurrentTick();
+	currentTick = osKernelGetTickCount();
 	return (timer->endTick <= currentTick);
 }
 
@@ -50,7 +37,7 @@ void countdown_ms(Timer *timer, uint32_t timeout)
 {
 	uint32_t currentTick;
 
-	currentTick = FreeRTOS_getCurrentTick();
+	currentTick = osKernelGetTickCount();
 	timer->endTick = currentTick + (timeout / portTICK_PERIOD_MS);
 	if (timer->endTick < currentTick) /* if it is over number of endTick */
 	{
@@ -62,7 +49,7 @@ void countdown_sec(Timer *timer, uint32_t timeout)
 {
 	uint32_t currentTick;
 
-	currentTick = FreeRTOS_getCurrentTick();
+	currentTick = osKernelGetTickCount();
 	timer->endTick = currentTick + (timeout * 1000 / portTICK_PERIOD_MS);
 	if (timer->endTick < currentTick) /* if it is over number of endTick */
 	{
@@ -74,7 +61,7 @@ uint32_t left_ms(Timer *timer)
 {
 	uint32_t result_ms, currentTick;
 
-	currentTick = FreeRTOS_getCurrentTick();
+	currentTick = osKernelGetTickCount();
 	if (timer->endTick > currentTick) {
 		result_ms = (timer->endTick - currentTick) * portTICK_PERIOD_MS;
 	} else {
@@ -90,8 +77,7 @@ void init_timer(Timer *timer)
 
 void delay(unsigned milliseconds)
 {
-	TickType_t sleepTick = milliseconds / portTICK_PERIOD_MS;
-	vTaskDelay(sleepTick);
+	osDelay(milliseconds);
 }
 
 #ifdef __cplusplus

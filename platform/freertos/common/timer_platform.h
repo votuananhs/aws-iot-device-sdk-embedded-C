@@ -23,7 +23,7 @@ extern "C" {
 /**
  * @file timer_platform.h
  */
-#include "FreeRTOS.h"
+#include "cmsis_os.h"
 #include "timer_interface.h"
 
 /**
