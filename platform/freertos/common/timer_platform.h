@@ -23,7 +23,7 @@ extern "C" {
 /**
  * @file timer_platform.h
  */
-#include "cmsis_os.h"
+#include "cmsis_os2.h"
 #include "timer_interface.h"
 
 /**

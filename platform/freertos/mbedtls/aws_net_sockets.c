@@ -57,7 +57,6 @@
 #include "lwip/sockets.h"
 #include <string.h>
 #include "cmsis_os.h"
-#include "task.h"
 #include "errno.h"
 
 #define IS_EINTR( ret ) ( ( ret ) == EINTR )
